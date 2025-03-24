@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import bcrypt from "bcryptjs"; // Бібліотека для хешування паролів
+import bcrypt from "bcryptjs"; 
 import { connectToDatabase } from "@/utils/bd";
 import User from "@/models/user";
 
@@ -7,7 +7,7 @@ import User from "@/models/user";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") return res.status(405).json({ message: "Method Not Allowed" });
 
-  await connectToDatabase(); // Підключаємось до бази
+  await connectToDatabase(); 
 
   const { name, email, password } = req.body;
   if (!name || !email || !password) return res.status(400).json({ message: "All fields are required" });
