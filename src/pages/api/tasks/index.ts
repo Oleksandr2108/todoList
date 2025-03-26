@@ -5,6 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import Task from "../../../models/task";
 import { connectToDatabase } from "@/utils/bd";
 import { authenticateUser } from "@/middleware/auth";
+import project from "@/models/project";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   await connectToDatabase();
@@ -23,14 +24,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === "POST") {
     try {
-      const { title } = req.body;
+      const { title, projectId } = req.body;
       const userId = (req as any).userId;
 
       if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
-      const task = await Task.create({ title, userId });
+      const task = await Task.create({ title, userId, projectId });
+
+      await project.findByIdAndUpdate(
+        projectId,
+        { $push: { tasks: task._id } },
+        { new: true }
+      );
+
       res.status(201).json(task);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ message: "Something went wrong" });
     }
   }

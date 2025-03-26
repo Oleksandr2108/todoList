@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs"; 
 import { connectToDatabase } from "@/utils/bd";
 import User from "@/models/user";
+import { sendEmail } from "@/utils/sendEmail";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -16,8 +17,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (existingUser) return res.status(400).json({ message: "User already exists" });
 
   const hashedPassword = await bcrypt.hash(password, 10); 
-  const newUser = new User({ name, email, password: hashedPassword });
+  const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
 
+  const newUser = new User({ name, email, password: hashedPassword, verificationCode  });
   await newUser.save();
-  res.status(201).json({ message: "User registered successfully" });
+
+  await sendEmail(email, "Verify your email", `Your verification code is: ${verificationCode}`);
+
+  res.status(201).json({ message: "User registered. Check your email for the verification code." });
 }
