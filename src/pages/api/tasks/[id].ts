@@ -17,7 +17,6 @@ export default async function handler(
     return res.status(200).json(updatedTask);
   }
 
-  
   if (req.method === "DELETE") {
     await Task.findByIdAndDelete(id);
     return res.status(200).json({ message: "Task deleted" });
