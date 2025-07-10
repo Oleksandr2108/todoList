@@ -10,9 +10,9 @@ const TaskSchema = new mongoose.Schema(
       required: true,
     },
     projectId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId || null,
       ref: "Project",
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }

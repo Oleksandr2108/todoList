@@ -1,4 +1,5 @@
 import project from "@/models/project";
+import task from "@/models/task";
 import { connectToDatabase } from "@/utils/bd";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -23,7 +24,7 @@ export default async function handler(
     if (!existingProject) {
       return res.status(404).json({ message: "Project not found" });
     }
-
+    await task.deleteMany({ _id: { $in: existingProject.tasks } });
     await project.findByIdAndDelete(id);
     return res.status(200).json({ message: "Project deleted" });
   }

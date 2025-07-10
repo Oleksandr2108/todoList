@@ -9,6 +9,7 @@ import project from "@/models/project";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   await connectToDatabase();
+  const { deleteTasks } = req.body;
 
   if (req.method === "GET") {
     try {
@@ -42,6 +43,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       console.error(error);
       res.status(500).json({ message: "Something went wrong" });
     }
+  }
+
+  if (req.method === "DELETE") {
+    if (deleteTasks) {
+      await Task.deleteMany({});
+      return res.status(200).json({ message: "All tasks deleted" });
+    }
+
+    return res.status(200).json({ message: "Task deleted" });
   }
 
   res.status(405).json({ error: "Method not allowed" });
