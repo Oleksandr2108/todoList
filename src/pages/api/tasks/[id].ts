@@ -18,7 +18,15 @@ export default async function handler(
   }
 
   if (req.method === "DELETE") {
+    const taskToDelete = await Task.findById(id);
+    if (!taskToDelete) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
     await Task.findByIdAndDelete(id);
+
+   
+
     return res.status(200).json({ message: "Task deleted" });
   }
 
