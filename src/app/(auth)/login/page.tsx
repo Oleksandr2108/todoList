@@ -35,6 +35,9 @@ const LoginPage = () => {
       console.error("Login error:", err);
     }
   };
+  const clickRegister = () => {
+    router.push("./register");
+  };
 
   return (
     <section className="col-span-full h-screen flex flex-col items-center justify-center">
@@ -73,15 +76,23 @@ const LoginPage = () => {
       <div className=" w-full flex items-center justify-center mt-10">
         <div className="h-[1px] bg-secondary flex-1"></div>
         <div className=" p-2 text-[11px] font-semibold">
-          <span>Forgot password ?</span>
+          <span className="text-[12px] font-semibold text-secondary">
+            Forgot password ?
+          </span>
         </div>
         <div className="h-[1px] bg-secondary flex-1"></div>
       </div>
       <div className=" w-full flex items-center justify-center mt-1">
         <div className="h-[1px] bg-secondary flex-1"></div>
         <div className=" p-2 text-[11px] font-semibold">
-          <span> {`Don't have an account?`}</span>
-          <span> Create an account</span>
+          <span className="text-[12px] font-semibold text-secondary">
+            {" "}
+            {`Don't have an account?`}
+          </span>
+          <span className="text-[12px] font-semibold text-orangeTxt cursor-pointer" onClick={clickRegister}>
+            {" "}
+            Create an account
+          </span>
         </div>
         <div className="h-[1px] bg-secondary flex-1"></div>
       </div>

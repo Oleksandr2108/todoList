@@ -38,6 +38,9 @@ const RegisterPage = () => {
       alert("Register error: " + JSON.stringify(err));
     }
   };
+  const clickSignIn = () => {
+    router.push("./login");
+  };
 
   return (
     <section className="col-span-full h-screen flex flex-col items-center justify-center">
@@ -82,8 +85,17 @@ const RegisterPage = () => {
       <div className=" w-full flex items-center justify-center mt-1">
         <div className="h-[1px] bg-secondary flex-1"></div>
         <div className=" p-2 text-[11px] font-semibold">
-          <span> Have an account? </span>
-          <span> Sign in</span>
+          <span className="text-[12px] font-semibold text-secondary">
+            {" "}
+            Have an account?{" "}
+          </span>
+          <span
+            className="text-[12px] font-semibold text-orangeTxt cursor-pointer"
+            onClick={clickSignIn}
+          >
+            {" "}
+            Sign in
+          </span>
         </div>
         <div className="h-[1px] bg-secondary flex-1"></div>
       </div>

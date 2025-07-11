@@ -12,6 +12,7 @@ module.exports = {
         success: "#10B981",
         warning: "#F59E0B",
         error: "#EF4444",
+        orangeTxt: "#FF7700"
       },
       fontFamily: {
         sans: ["Inter", "Arial", "Helvetica", "sans-serif"],

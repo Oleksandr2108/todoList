@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/components/Header/Header";
 import LogoutButton from "@/components/Logout/Logout";
 import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 
@@ -32,6 +33,7 @@ const HomePage = () => {
 
   return (
     <>
+      <Header />
       <h1 className="text-[40px] font-bold text-main text-center">Home Page</h1>
       <LogoutButton />
       {/* <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center w-full">
