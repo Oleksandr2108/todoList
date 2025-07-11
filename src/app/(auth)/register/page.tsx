@@ -4,47 +4,56 @@ import { useDispatch } from "react-redux";
 import CustomInput from "@/components/CusstomInput";
 
 import CustomButton from "@/components/CustomButton/CustomButton";
-import { useLoginMutation } from "@/services/authApi";
-import { setToken } from "@/features/authSlice";
+import { useRegisterMutation } from "@/services/authApi";
+import { setEmail } from "@/features/authSlice";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-type LoginFormInputs = {
+type RegisterFormValues = {
+  name: string;
   email: string;
   password: string;
 };
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [login, { isLoading }] = useLoginMutation();
+  const [registerUser, { isLoading }] = useRegisterMutation();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormInputs>();
+  } = useForm<RegisterFormValues>();
 
-  const onSubmit = async (data: LoginFormInputs) => {
+  const onSubmit = async (data: RegisterFormValues) => {
     try {
-      const response = await login(data).unwrap();
-      dispatch(setToken(response.token));
-      localStorage.setItem("token", response.token);
-      router.push("/");
+      const res = await registerUser(data).unwrap();
+      alert(res.message);
+      dispatch(setEmail(data.email));
+
+      router.push("/verify-email");
     } catch (err) {
-      console.error("Login error:", err);
+      console.error("Register error:", err);
+      alert("Register error: " + JSON.stringify(err));
     }
   };
 
   return (
     <section className="col-span-full h-screen flex flex-col items-center justify-center">
       <h1 className="col-span-full text-[40px] font-bold text-main text-center mb-10">
-        SIGN IN
+        SIGN UP
       </h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="col-span-full flex flex-col items-center justify-center w-full"
       >
+        <CustomInput
+          label={"Name"}
+          type={"text"}
+          placeholder={"Your name ..."}
+          {...register("name", { required: "Name is required" })}
+        />
         <CustomInput
           label={"Email"}
           type={"email"}
@@ -70,18 +79,11 @@ const LoginPage = () => {
         />
       </form>
 
-      <div className=" w-full flex items-center justify-center mt-10">
-        <div className="h-[1px] bg-secondary flex-1"></div>
-        <div className=" p-2 text-[11px] font-semibold">
-          <span>Forgot password ?</span>
-        </div>
-        <div className="h-[1px] bg-secondary flex-1"></div>
-      </div>
       <div className=" w-full flex items-center justify-center mt-1">
         <div className="h-[1px] bg-secondary flex-1"></div>
         <div className=" p-2 text-[11px] font-semibold">
-          <span> {`Don't have an account?`}</span>
-          <span> Create an account</span>
+          <span> Have an account? </span>
+          <span> Sign in</span>
         </div>
         <div className="h-[1px] bg-secondary flex-1"></div>
       </div>
@@ -89,4 +91,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

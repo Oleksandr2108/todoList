@@ -19,7 +19,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         type={type}
         disabled={disabled}
         onClick={onClick}
-        className={`rounded-md bg-main text-2xl text-white font-semibold text-center py-1 ${classBtn}`}
+        className={`rounded-2xl bg-main text-2xl text-white font-semibold text-center py-1 ${classBtn}`}
       >
         {text}
       </button>

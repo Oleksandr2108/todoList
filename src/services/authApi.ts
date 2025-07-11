@@ -15,6 +15,24 @@ interface LoginResponse {
   token: string;
 }
 
+interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface RegisterResponse {
+  message: string;
+}
+interface VerifyEmailRequest {
+  code: string;
+  email: string;
+}
+
+interface VerifyEmailResponse {
+  message: string;
+}
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: axiosBaseQuery({ baseUrl: "http://localhost:3000/api" }),
@@ -26,7 +44,21 @@ export const authApi = createApi({
         data: credentials,
       }),
     }),
+    register: builder.mutation<RegisterResponse, RegisterRequest>({
+      query: (newUser) => ({
+        url: "/auth/register",
+        method: "POST",
+        data: newUser,
+      }),
+    }),
+    verifyEmail: builder.mutation<VerifyEmailResponse, VerifyEmailRequest>({
+      query: (verify) => ({
+        url: "/auth/verify-email",
+        method: "POST",
+        data: verify,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useVerifyEmailMutation } = authApi;

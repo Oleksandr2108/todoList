@@ -1,6 +1,7 @@
 "use client";
 
 import LogoutButton from "@/components/Logout/Logout";
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 
 // import { useState } from "react";
 // import { useLoginMutation } from "../services/authApi";
@@ -11,6 +12,7 @@ import LogoutButton from "@/components/Logout/Logout";
 // import CustomButton from "@/components/CustomButton/CustomButton";
 
 const HomePage = () => {
+  useAuthRedirect();
   // const dispatch = useDispatch();
   // const [login, { isLoading }] = useLoginMutation();
   // const [email, setEmail] = useState("");
